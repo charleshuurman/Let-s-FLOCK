@@ -1,0 +1,186 @@
+<!--home.handlebars-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Let's Flock</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    {{> header }}
+
+
+ <main>
+
+<section class="topic-selection">
+    <h2>Select one of these TOPICS to see TODAY'S HEADLINES:</h2>
+    <div class="topics">
+        {{#each topics}}
+            <button class="topic-button" onclick="fetchHeadlines('{{this}}')">{{this}}</button>
+        {{/each}}
+    </div>
+
+
+        <section class="headline-display" id="headlines">
+            <!-- Headlines will be populated here -->
+        </section>
+
+
+
+        <script>
+
+            function fetchHeadlines(topic) {
+                document.querySelectorAll('.topic-button').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                event.target.classList.add('selected');
+
+                 // Fetch headlines from your server
+                fetch(`/fetch-headlines/${topic}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const headlinesDiv = document.getElementById('headlines');
+                        headlinesDiv.innerHTML = '';
+                        data.forEach(headline => {
+                            const headlineElement = document.createElement('div');
+                            headlineElement.className = 'headline';
+                            headlineElement.innerHTML = `
+                                <img src="${headline.photo_url}" alt="Headline Image">
+                                <a href="${headline.link}">${headline.title}</a>
+                                <p>Published: ${headline.published_datetime_utc}</p>
+                                <button class="choose-button" onclick="selectHeadline(${headline.id}, this)">Choose</button>
+                            `;
+                            headlinesDiv.appendChild(headlineElement);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching headlines:', error));
+            }
+
+            function selectHeadline(headlineId, btn) {
+                if (btn.classList.contains('selected')) {
+                    btn.classList.remove('selected');
+                    btn.textContent = 'Choose';
+                    // API call to remove the selection
+                } else {
+                    btn.classList.add('selected');
+                    btn.textContent = 'Selected';
+                    // API call to track the selection
+                }
+            }
+        </script>
+
+<!--
+    
+<section class="topic-selection">
+    <h2>Select one of these TOPICS to se TODAYS HEADLINES:</h2>
+    <div class="topics">
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">WORLD</button>
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">NATIONAL</button>
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">BUSINESS</button>
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">TECHNOLOGY</button>
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">ENTERTAINMENT</button>
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">SPORTS</button>
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">SCIENCE</button>
+        <button class="topic-button" onclick="fetchHeadlines('WORLD')">HEALTH</button>
+    </div>
+</section>
+
+ 
+<script>
+    function fetchHeadlines(topic) {
+    // Highlight the selected topic
+    document.querySelectorAll('.topic-button').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    event.target.classList.add('selected');
+
+    // AJAX request to fetch headlines
+    fetch(`/headlines/${topic}`)
+        .then(response => response.json())
+        .then(data => {
+            // Update the headlines section of your page
+            const headlinesDiv = document.getElementById('headlines');
+            headlinesDiv.innerHTML = ''; // Clear current content
+            data.forEach(headline => {
+                // Create and append new elements for each headline
+                const headlineElement = document.createElement('div');
+                headlineElement.innerHTML = `
+                    <img src="${headline.photo_url}" alt="Headline Image">
+                    <a href="${headline.link}">${headline.title}</a>
+                    <p>Published: ${headline.published_datetime_utc}</p>
+                `;
+                headlinesDiv.appendChild(headlineElement);
+            });
+        })
+        .catch(error => console.error('Error fetching headlines:', error));
+           // Call the API to track/untrack the selection
+    // Example: POST to /headline-selections/select or /headline-selections/remove
+}
+</script>
+
+ -->
+
+<section class="headline-display" id="headlines">
+    <!-- Headlines will be populated here -->
+</section>
+
+
+ 
+
+        <section class="headline-display">
+            <div class="headlines">
+                {{#each headlines}}
+                    <div class="headline">
+                        <img src="{{this.photo_url}}" alt="Headline Image">
+                        <a href="{{this.link}}">{{this.title}}</a>
+                        <p>Published: {{this.published_datetime_utc}}</p>
+                        <button class="choose-button">Choose</button>
+                    </div>
+                {{/each}}
+            </div>
+        </section>
+
+        <section class="flock">
+            <h2>Flock</h2>
+            <div class="flock-users">
+                {{#each flockUsers}}
+                    <span>{{this.username}}</span>
+                {{/each}}
+            </div>
+        </section>
+
+        <section class="schedule-meetups">
+            <h2>Schedule Meetups</h2>
+            <div class="timeslots">
+                {{#each timeslots}}
+                    <div class="timeslot">
+                        <label>
+                            <input type="checkbox" name="timeslot" value="{{this}}">
+                            {{this}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </section>
+
+        <section class="comments">
+            <h2>Comments</h2>
+            <div class="comment-box">
+                {{#each comments}}
+                    <div class="comment">
+                        <span>{{this.username}}: </span>
+                        <span>{{this.message}}</span>
+                        <span>at {{this.timestamp}}</span>
+                    </div>
+                {{/each}}
+                <textarea name="comment" placeholder="Add a comment..."></textarea>
+                <button type="submit">Post</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Let's Flock</p>
+    </footer>
+</body>
+</html>

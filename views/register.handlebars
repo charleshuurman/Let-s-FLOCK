@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Let's Flock - Register</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <main class="register-container">
+        <h1>Join Let's Flock</h1>
+        <p>Connect over shared interests - Not a dating app.</p>
+
+        <form action="/register" method="post" class="register-form">
+            <div class="avatar-selection">
+                <!-- Replace with actual avatar images -->
+                {{#each avatars}}
+                    <label>
+                        <input type="radio" name="avatar" value="{{this}}" required>
+                        <img src="{{this.url}}" alt="Avatar">
+                    </label>
+                {{/each}}
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label>Gender:</label>
+                <select name="gender" required>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" id="geoLocation" name="geoLocation" required>
+                <label for="geoLocation">Accept Geolocation</label>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" id="overEighteen" name="overEighteen" required>
+                <label for="overEighteen">I am over 18 years old</label>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">Accept Terms and Conditions</label>
+            </div>
+
+            <button type="submit" class="register-button">Register</button>
+
+            <div class="login-link">
+                <p>Already have an account? <a href="/login">Login</a></p>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
