@@ -7,7 +7,7 @@ const axios = require("axios"); // Import axios for making API requests
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Set up Handlebars as the view engine
 app.engine("handlebars", engine({ defaultLayout: "main" }));
