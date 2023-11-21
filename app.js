@@ -89,7 +89,7 @@ app.get("/", async (req, res) => {
     params: { country: "US", lang: "en" },
     headers: {
       "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
-      "X-RapidAPI-Host": "real-time-news-data.p.rapidapi.com",
+      "X-RapidAPI-Host": process.env.HOSTNAME_KEY,
     },
   };
 
