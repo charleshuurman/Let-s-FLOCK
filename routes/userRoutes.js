@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 // const UserHeadlineSelection = require('../models/UserHeadlineSelection');
-const Headline = require('../models/Headline');
+const Headline = require('../models/headline');
 const router = express.Router();
 
 // GET route for user registration form
