@@ -111,28 +111,28 @@ app.get('/top-news', async (req, res) => {
     }
 });
 
-app.get('/api/user-headlines/:userId', async (req, res) => {
-    try {
-        const userId = req.params.userId;
+// app.get('/api/user-headlines/:userId', async (req, res) => {
+//     try {
+//         const userId = req.params.userId;
 
-        // Find all headline selections for the user
-        const userHeadlines = await UserHeadlineSelection.findAll({
-            where: { userId: userId },
-            include: [{
-                model: Headline, // Assuming you've set up an association in UserHeadlineSelection
-                as: 'headline'   // 'headline' should match the alias used in your association
-            }]
-        });
+//         // Find all headline selections for the user
+//         const userHeadlines = await UserHeadlineSelection.findAll({
+//             where: { userId: userId },
+//             include: [{
+//                 model: Headline, // Assuming you've set up an association in UserHeadlineSelection
+//                 as: 'headline'   // 'headline' should match the alias used in your association
+//             }]
+//         });
 
-        // Extracting headline details from the selections
-        const headlines = userHeadlines.map(selection => selection.headline);
+//         // Extracting headline details from the selections
+//         const headlines = userHeadlines.map(selection => selection.headline);
 
-        res.json(headlines);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Server error');
-    }
-});
+//         res.json(headlines);
+//     } catch (error) {
+//         console.error('Error:', error);
+//         res.status(500).send('Server error');
+//     }
+// });
 
 
 // Sync the database and start the server
