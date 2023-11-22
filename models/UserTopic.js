@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./User');
+const User = require('./user');
 const Topic = require('./Topic');
 
 const UserTopic = sequelize.define('userTopic', {

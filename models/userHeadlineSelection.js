@@ -1,7 +1,7 @@
 // models/UserHeadlineSelection.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); // Adjust the path as necessary
-const User = require('./User'); // Import the User model here
+const User = require('./user'); // Import the User model here
 const Headline = require('./Headline'); // Import the Headline model here
 
 const UserHeadlineSelection = sequelize.define('UserHeadlineSelection', {

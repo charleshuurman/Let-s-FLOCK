@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 
 // Import Sequelize and models
 const sequelize = require('./config/database');
-const User = require('./models/User');
+const User = require('./models/user');
 const Headline = require('./models/headline');
 //const UserHeadlineSelection = require('./models/userHeadlineSelection');
 
