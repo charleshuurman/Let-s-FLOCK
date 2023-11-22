@@ -9,7 +9,7 @@ require('dotenv').config();
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
   }
-  
+
 // Session middleware configuration
 app.use(session({
     secret: process.env.SESSION_SECRET, 
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 
 // Import Sequelize and models
 const sequelize = require('./config/database');
-const User = require('./models/user');
+const User = require('./models/User');
 const Headline = require('./models/headline');
 //const UserHeadlineSelection = require('./models/userHeadlineSelection');
 
