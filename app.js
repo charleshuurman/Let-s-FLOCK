@@ -6,7 +6,10 @@ const path = require('path');
 const app = express();
 require('dotenv').config();
 
-
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
+  
 // Session middleware configuration
 app.use(session({
     secret: process.env.SESSION_SECRET, 
@@ -15,6 +18,8 @@ app.use(session({
     cookie: { secure: false }
 }));
 
+
+  
 // Middleware for parsing request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
