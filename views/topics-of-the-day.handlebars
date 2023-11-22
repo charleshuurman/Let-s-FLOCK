@@ -1,0 +1,14 @@
+
+<h1>Topics of the Day</h1>
+
+{{#each topics}}
+    <div class="topic">
+       <div> <h2>{{this.name}}</h2></div>
+        <div><p>Date: {{this.date}}</div>
+        <p>{{this.description}}</p>
+        <a href="/topics/{{this.id}}/join">Join Discussion</a>
+        <a href="/topics/{{this.id}}">View Details</a>
+    </div>
+{{else}}
+    <p>No topics available for today.</p>
+{{/each}}

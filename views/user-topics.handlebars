@@ -1,0 +1,37 @@
+<h1>Your Topics</h1>
+
+<!-- List of Topics -->
+{{#each userTopics as |userTopic|}}
+  <div class="topic">
+    <h2>{{userTopic.topic.name}}</h2>
+    <p>{{userTopic.topic.description}}</p>
+
+    <!-- List of Users in the Same Topic -->
+    <h3>Other Users in this Topic:</h3>
+    <ul>
+      {{#each userTopic.topic.users as |otherUser|}}
+        <li>{{otherUser.username}}</li>
+      {{/each}}
+    </ul>
+
+    <!-- Option to Leave Topic -->
+    <form action="/topic/leave" method="post">
+      <input type="hidden" name="topicId" value="{{userTopic.topic.id}}">
+      <input type="submit" value="Leave Topic">
+    </form>
+  </div>
+{{else}}
+  <p>You have not joined any topics yet.</p>
+{{/each}}
+
+<!-- Option to Join More Topics -->
+<h2>Join More Topics</h2>
+<form action="/topic/join" method="post">
+  <label for="topicId">Select Topic:</label>
+  <select id="topicId" name="topicId">
+    {{#each allTopics as |topic|}}
+      <option value="{{topic.id}}">{{topic.name}}</option>
+    {{/each}}
+  </select>
+  <input type="submit" value="Join Topic">
+</form>

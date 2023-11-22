@@ -1,75 +1,121 @@
+{{!-- <h1>User Registration</h1>
+<form action="/users/register" method="POST">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label>Gender:</label>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">Other</label>
+    </div>
+    <div>
+        <label for="over18">Over 18:</label>
+        <input type="checkbox" id="over18" name="over18">
+    </div>
+    <div>
+        <label for="geoLocation">Allow Geo-Location:</label>
+        <input type="checkbox" id="geoLocation" name="geoLocation">
+    </div>
+    <button type="submit">Register</button>
+</form> --}}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Let's Flock - Register</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration - Let's FLOCK</title>
+    <link rel="stylesheet" href="/styles/registerstyles.css">
 </head>
 <body>
-    <main class="register-container">
-        <h1>Join Let's Flock</h1>
-        <p>Connect over shared interests - Not a dating app.</p>
+<div class="div">
+    <div class="div-2">
+        <div class="div-3"></div>
+        <div class="div-4">Let's FLOCK</div>
+    </div>
+  
+    <!-- Registration Form Section -->
+    <div class="div-5">
+        <div class="div-6">Join Let's FLOCK</div>
+        <div class="div-7">Connect Over Shared Interests</div>
 
-        <form action="/register" method="post" class="register-form">
-            <div class="avatar-selection">
-                <!-- Replace with actual avatar images -->
-                {{#each avatars}}
-                    <label>
-                        <input type="radio" name="avatar" value="{{this}}" required>
-                        <img src="{{this.url}}" alt="Avatar">
-                    </label>
-                {{/each}}
+        <form action="/users/register" method="POST" class="registration-form">
+            <!-- Username -->
+            <div class="div-8">
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
             </div>
 
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+            <!-- Full Name -->
+            <div class="div-9">
+                <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
             </div>
 
-            <div class="form-group">
-                <label for="fullName">Full Name:</label>
-                <input type="text" id="fullName" name="fullName" required>
+            <!-- Email -->
+            <div class="div-10">
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
             </div>
 
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+            <!-- Password -->
+            <div class="div-11">
+                <input type="password" id="password" name="password" required placeholder="Create your password">
             </div>
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <!-- Gender Selection -->
+            <div class="div-15">
+                <button type="button" class="gender-btn" data-value="male">Male</button>
+                <button type="button" class="gender-btn" data-value="female">Female</button>
+                <button type="button" class="gender-btn" data-value="other">Other</button>
+                <input type="hidden" id="gender" name="gender" required>
             </div>
 
-            <div class="form-group">
-                <label>Gender:</label>
-                <select name="gender" required>
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                    <option value="Other">Other</option>
-                </select>
+            <!-- Over 18 and Geo-Location -->
+            <div class="div-27">
+               <input type="checkbox" id="over18" name="over18" required> Over 18
+                <input type="checkbox" id="geoLocation" name="geoLocation" required> Allow Geo-Location
             </div>
 
-            <div class="form-group">
-                <input type="checkbox" id="geoLocation" name="geoLocation" required>
-                <label for="geoLocation">Accept Geolocation</label>
-            </div>
-
-            <div class="form-group">
-                <input type="checkbox" id="overEighteen" name="overEighteen" required>
-                <label for="overEighteen">I am over 18 years old</label>
-            </div>
-
-            <div class="form-group">
-                <input type="checkbox" id="terms" name="terms" required>
-                <label for="terms">Accept Terms and Conditions</label>
-            </div>
-
-            <button type="submit" class="register-button">Register</button>
-
-            <div class="login-link">
-                <p>Already have an account? <a href="/login">Login</a></p>
+            <!-- Submit Button -->
+            <div class="div-28">
+                <button type="submit">Register</button>
             </div>
         </form>
-    </main>
+    </div>
+
+    <!-- Additional Content from index.html can go here -->
+    <!-- ... -->
+
+    <div class="div-29">
+        <div class="div-30">About Us</div>
+        <div class="div-31">Contact</div>
+        <div class="div-32">Privacy Policy</div>
+    </div>
+</div>
+
+<script>
+  document.querySelectorAll('.gender-btn').forEach(button => {
+      button.addEventListener('click', function() {
+          document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('selected'));
+          this.classList.add('selected');
+          document.getElementById('gender').value = this.dataset.value;
+      });
+  });
+</script>
 </body>
 </html>

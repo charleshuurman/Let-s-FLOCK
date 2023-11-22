@@ -1,186 +1,319 @@
-<!--home.handlebars-->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Let's Flock</title>
-    <link rel="stylesheet" href="/css/style.css">
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+    <link rel="stylesheet" href="/styles/homestyless.css">
+    <script src="script.js"></script>
 </head>
-
 <body>
-    {{> header }}
 
+<!-- {{> header}} -->
 
- <main>
+<div class="div">
+    <!-- Header Section -->
+    <div class="div-2">
+        <div class="div-3">
+        <img src="/images/logo.png">
+        </div>
+        <div class="div-4">Let's FLOCK</div>
 
-<section class="topic-selection">
-    <h2>Select one of these TOPICS to see TODAY'S HEADLINES:</h2>
-    <div class="topics">
-        {{#each topics}}
-            <button class="topic-button" onclick="fetchHeadlines('{{this}}')">{{this}}</button>
-        {{/each}}
+            <div class="div-5">
+        {{#if session.username}}
+            <div class="div-6">
+                 <img src="/images/avatar1.png">
+            </div>
+            <div class="div-7">
+                <div class="div-8">{{session.username}}</div>
+                <!-- User specific content here   -->
+            </div>
+            <div class="div-13"></div>
+  
+        {{else}}
+            <div class="div-8">Welcome to Flock App!</div>
+        {{/if}}
+    </div>
+         <div class="user-info">
+        <!-- Dynamic user avatar and username -->
+        <!--
+        <img src="{{user.avatar}}" alt="User Avatar" class="avatar-img">
+        <span>{{user.username}}</span>
+        -->
+        <!-- Navigation Links -->
+        <nav class="Button1">
+        <a href="/users/profile">Profile</a>
+        </nav>
+        <nav> 
+            <a href="/logout">Log Out</a> 
+            </nav>
+    </div>
     </div>
 
-
-        <section class="headline-display" id="headlines">
-            <!-- Headlines will be populated here -->
-        </section>
-
-
-
-        <script>
-
-            function fetchHeadlines(topic) {
-                document.querySelectorAll('.topic-button').forEach(btn => {
-                    btn.classList.remove('selected');
-                });
-                event.target.classList.add('selected');
-
-                 // Fetch headlines from your server
-                fetch(`/fetch-headlines/${topic}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const headlinesDiv = document.getElementById('headlines');
-                        headlinesDiv.innerHTML = '';
-                        data.forEach(headline => {
-                            const headlineElement = document.createElement('div');
-                            headlineElement.className = 'headline';
-                            headlineElement.innerHTML = `
-                                <img src="${headline.photo_url}" alt="Headline Image">
-                                <a href="${headline.link}">${headline.title}</a>
-                                <p>Published: ${headline.published_datetime_utc}</p>
-                                <button class="choose-button" onclick="selectHeadline(${headline.id}, this)">Choose</button>
-                            `;
-                            headlinesDiv.appendChild(headlineElement);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching headlines:', error));
-            }
-
-            function selectHeadline(headlineId, btn) {
-                if (btn.classList.contains('selected')) {
-                    btn.classList.remove('selected');
-                    btn.textContent = 'Choose';
-                    // API call to remove the selection
-                } else {
-                    btn.classList.add('selected');
-                    btn.textContent = 'Selected';
-                    // API call to track the selection
-                }
-            }
-        </script>
-
-<!--
+    <!-- User Info Section -->
     
-<section class="topic-selection">
-    <h2>Select one of these TOPICS to se TODAYS HEADLINES:</h2>
-    <div class="topics">
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">WORLD</button>
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">NATIONAL</button>
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">BUSINESS</button>
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">TECHNOLOGY</button>
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">ENTERTAINMENT</button>
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">SPORTS</button>
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">SCIENCE</button>
-        <button class="topic-button" onclick="fetchHeadlines('WORLD')">HEALTH</button>
+    <!-- Main Content Area -->
+    <div id="headlines-container">
+    
+        <!-- Trending Topics Section -->
+        <div class="div-14">
+            <div class="div-15">Today’s Trending Topics</div>
+            <div class="choose">--slide and choose--</div>
+            <div class="main-content-area">
+            <div id="news-container">
+                <!-- Dynamic news content will be loaded here -->
+            </div>
+        </div>
+        </div>
+
+      
     </div>
-</section>
+      <!-- Matched Interests Section -->
+   <div class="div-39">Matched Interests</div>
+    <div class="div-40">
+      Discover others who share your interests. Join the conversation!
+    </div>
+    <div class="div-41">
+      <div class="div-42"></div>
+      <div class="div-43">
+        <div class="div-44">Food</div>
+        <div class="div-45">643 users interested</div>
+        <div class="div-46">
+          Tacos or pizza? Share your thoughts and find lunch buddies!
+        </div>
+        <div class="div-47">
+          <div class="div-48">Foodie</div>
+          <div class="div-49">Delicious</div>
+        </div>
+        <div class="div-50">
+          <div class="div-51">
+            <div class="div-52"></div>
+            <div class="div-53">Let's FLOCK Team</div>
+          </div>
+          <div class="div-54">💬</div>
+        </div>
+        <div class="div-55">
+          <div class="div-56">@PeterPan:</div>
+          <div class="div-57">Who wants to eat 1pm in Tasty Restaurant?</div>
+        </div>
+        <div class="div-58">
+          <div class="div-59">@Hook:</div>
+          <div class="div-60">I am up for that</div>
+        </div>
+        <div class="div-61">
+          <div class="div-62">Enter your full name</div>
+          <div class="div-63">💬</div>
+        </div>
+      </div>
+    </div>
+ <div class="div-64">
+      <div class="div-65"></div>
+      <div class="div-66">
+        <div class="div-67">Sports</div>
+        <div class="div-68">387 users interested</div>
+        <div class="div-69">
+          Which team do you support? Discuss sports while enjoying a meal!
+        </div>
+        <div class="div-70">Sports Lover</div>
+        <div class="div-71">
+          <div class="div-72">
+            <div class="div-73"></div>
+            <div class="div-74">Let's FLOCK Team</div>
+          </div>
+          <div class="div-75">💬</div>
+        </div>
+        <div class="div-76">
+          <div class="div-77">@PeterPan:</div>
+          <div class="div-78">Who wants to eat 1pm in Tasty Restaurant?</div>
+        </div>
+        <div class="div-79">
+          <div class="div-80">@Hook:</div>
+          <div class="div-81">I am up for that</div>
+        </div>
+        <div class="div-82">
+          <div class="div-83">Enter your full name</div>
+          <div class="div-84">💬</div>
+        </div>
+      </div>
+  </div>
+  <div class="div-85">
+    <div class="div-86">About Us</div>
+    <div class="div-87">Contact</div>
+    <div class="div-88">Privacy Policy</div>
+  </div>
 
- 
+
+</div>
+
 <script>
-    function fetchHeadlines(topic) {
-    // Highlight the selected topic
-    document.querySelectorAll('.topic-button').forEach(btn => {
-        btn.classList.remove('selected');
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchSelectedHeadlines();
+        fetchTopNews();
     });
-    event.target.classList.add('selected');
 
-    // AJAX request to fetch headlines
-    fetch(`/headlines/${topic}`)
-        .then(response => response.json())
-        .then(data => {
-            // Update the headlines section of your page
-            const headlinesDiv = document.getElementById('headlines');
-            headlinesDiv.innerHTML = ''; // Clear current content
-            data.forEach(headline => {
-                // Create and append new elements for each headline
-                const headlineElement = document.createElement('div');
-                headlineElement.innerHTML = `
-                    <img src="${headline.photo_url}" alt="Headline Image">
-                    <a href="${headline.link}">${headline.title}</a>
-                    <p>Published: ${headline.published_datetime_utc}</p>
-                `;
-                headlinesDiv.appendChild(headlineElement);
+    function fetchTopNews() {
+        fetch('/top-news')
+            .then(response => response.json())
+            .then(data => {
+                const newsContainer = document.getElementById('news-container');
+                if (!data.length) {
+                    newsContainer.innerHTML = '<p>No news available at the moment.</p>';
+                    return;
+                }
+                data.forEach(news => {
+                    const newsItem = createNewsItem(news);
+                    newsContainer.appendChild(newsItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                newsContainer.innerHTML = '<p>Error loading news.</p>';
             });
-        })
-        .catch(error => console.error('Error fetching headlines:', error));
-           // Call the API to track/untrack the selection
-    // Example: POST to /headline-selections/select or /headline-selections/remove
-}
+    }
+
+ function createNewsItem(news) {
+    const newsItem = document.createElement('div');
+    newsItem.className = 'news-item';
+
+        const title = document.createElement('h3');
+        title.textContent = news.title;
+        title.className = 'news-title';
+
+
+        const image = document.createElement('img');
+        image.src = news.photo_url;
+        image.alt = 'News Image';
+        image.className = 'news-image';
+        
+      const link = document.createElement('a');
+        link.href = news.link;
+        link.textContent = 'Read more';
+        link.target = '_blank';
+        const publishedDate = document.createElement('p');
+        publishedDate.textContent = `Published: ${news.published_datetime_utc}`;
+
+        const sourceLogo = document.createElement('img');
+        sourceLogo.src = news.source_logo_url;
+        sourceLogo.alt = 'Source Logo';
+        sourceLogo.className = 'source-logo';
+
+        const selectButton = document.createElement('button');
+        selectButton.className = 'select-button';
+        selectButton.textContent = 'SELECT';
+        selectButton.onclick = () => toggleSelection(news.id, selectButton);
+
+        newsItem.appendChild(title);
+        newsItem.appendChild(link);
+        newsItem.appendChild(image);
+        newsItem.appendChild(publishedDate);
+        newsItem.appendChild(sourceLogo);
+        newsItem.appendChild(selectButton);
+
+
+
+          const commentsContainer = document.createElement('div');
+        commentsContainer.className = 'comments-container';
+
+        // Existing comments list (this part needs backend integration to display real comments)
+        const commentsList = document.createElement('ul');
+        commentsList.className = 'comments-list';
+        // Placeholder for comments
+        const commentPlaceholder = document.createElement('li');
+        commentPlaceholder.textContent = 'No comments yet.';
+        commentsList.appendChild(commentPlaceholder);
+        commentsContainer.appendChild(commentsList);
+
+        // Form to add new comment
+        const commentForm = document.createElement('form');
+        commentForm.action = '/add-comment'; // Update with your actual endpoint
+        commentForm.method = 'POST';
+
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'headlineId';
+        hiddenInput.value = news.id;
+
+        const textarea = document.createElement('textarea');
+        textarea.name = 'commentText';
+        textarea.required = true;
+        textarea.placeholder = 'Add a comment...';
+
+        const submitButton = document.createElement('button');
+        submitButton.type = 'submit';
+        submitButton.textContent = 'Post';
+
+        commentForm.appendChild(hiddenInput);
+        commentForm.appendChild(textarea);
+        commentForm.appendChild(submitButton);
+        commentsContainer.appendChild(commentForm);
+
+        newsItem.appendChild(commentsContainer);
+        return newsItem;
+    }
+
+
+    function toggleSelection(newsId, button) {
+        if (button.textContent === 'SELECT') {
+            button.textContent = "Let's FLOCK";
+            button.style.backgroundColor = 'green';
+            button.style.color = 'black';
+            // Implement API call to associate the headline with the user
+        } else {
+            button.textContent = 'SELECT';
+            button.style.backgroundColor = 'grey';
+            button.style.color = 'darkgreen';
+            // Implement API call to disassociate the headline from the user
+        }
+    }
+    function fetchSelectedHeadlines() {
+        fetch('/api/user-headlines/' + '{{session.userId}}')
+            .then(response => response.json())
+            .then(selectedHeadlines => {
+                const selectedNewsContainer = document.getElementById('selected-headlines-container');
+                if (selectedHeadlines.length === 0) {
+                    selectedNewsContainer.innerHTML = '<p>You have not selected any headlines yet.</p>';
+                } else {
+                    selectedHeadlines.forEach(headline => {
+                        const headlineElement = createSelectedHeadlineElement(headline);
+                        selectedNewsContainer.appendChild(headlineElement);
+                    });
+                }
+            })
+            .catch(error => console.error('Error fetching selected headlines:', error));
+    }
+
+
+    function createSelectedHeadlineElement(headline) {
+        const headlineDiv = document.createElement('div');
+        headlineDiv.className = 'selected-headline';
+
+        const title = document.createElement('h3');
+        title.textContent = headline.title;
+        title.className = 'selected-headline-title';
+
+        const image = document.createElement('img');
+        image.src = headline.photo_url;
+        image.alt = 'Selected Headline Image';
+        image.className = 'selected-headline-image';
+
+        const link = document.createElement('a');
+        link.href = headline.link;
+        link.textContent = 'Read more';
+        link.target = '_blank';
+        link.className = 'selected-headline-link';
+
+        const publishedDate = document.createElement('p');
+        publishedDate.textContent = `Published: ${headline.published_datetime_utc}`;
+        publishedDate.className = 'selected-headline-date';
+
+        headlineDiv.appendChild(title);
+        headlineDiv.appendChild(image);
+        headlineDiv.appendChild(link);
+        headlineDiv.appendChild(publishedDate);
+
+        return headlineDiv;
+    }
 </script>
 
- -->
-
-<section class="headline-display" id="headlines">
-    <!-- Headlines will be populated here -->
-</section>
-
-
- 
-
-        <section class="headline-display">
-            <div class="headlines">
-                {{#each headlines}}
-                    <div class="headline">
-                        <img src="{{this.photo_url}}" alt="Headline Image">
-                        <a href="{{this.link}}">{{this.title}}</a>
-                        <p>Published: {{this.published_datetime_utc}}</p>
-                        <button class="choose-button">Choose</button>
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-
-        <section class="flock">
-            <h2>Flock</h2>
-            <div class="flock-users">
-                {{#each flockUsers}}
-                    <span>{{this.username}}</span>
-                {{/each}}
-            </div>
-        </section>
-
-        <section class="schedule-meetups">
-            <h2>Schedule Meetups</h2>
-            <div class="timeslots">
-                {{#each timeslots}}
-                    <div class="timeslot">
-                        <label>
-                            <input type="checkbox" name="timeslot" value="{{this}}">
-                            {{this}}
-                        </label>
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-
-        <section class="comments">
-            <h2>Comments</h2>
-            <div class="comment-box">
-                {{#each comments}}
-                    <div class="comment">
-                        <span>{{this.username}}: </span>
-                        <span>{{this.message}}</span>
-                        <span>at {{this.timestamp}}</span>
-                    </div>
-                {{/each}}
-                <textarea name="comment" placeholder="Add a comment..."></textarea>
-                <button type="submit">Post</button>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; Let's Flock</p>
-    </footer>
 </body>
 </html>
