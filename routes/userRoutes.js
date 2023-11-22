@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const UserHeadlineSelection = require('../models/UserHeadlineSelection');
+// const UserHeadlineSelection = require('../models/UserHeadlineSelection');
 const Headline = require('../models/Headline');
 const router = express.Router();
 
@@ -74,31 +74,31 @@ router.get('/profile', async (req, res) => {
 });
 
 // GET route for user's home page with selected headlines
-router.get('/home', async (req, res) => {
-  if (!req.session.userId) {
-    return res.redirect('/users/login');
-  }
+// router.get('/home', async (req, res) => {
+//   if (!req.session.userId) {
+//     return res.redirect('/users/login');
+//   }
 
-  try {
-    const selectedHeadlines = await UserHeadlineSelection.findAll({
-      where: { userId: req.session.userId },
-      include: [{ model: Headline, as: 'headline' }]
-    });
+//   try {
+//     const selectedHeadlines = await UserHeadlineSelection.findAll({
+//       where: { userId: req.session.userId },
+//       include: [{ model: Headline, as: 'headline' }]
+//     });
 
-    res.render('UserHeadlineSelection', { 
-      selectedHeadlines: selectedHeadlines.map(sh => sh.get({ plain: true })),
-      username: req.session.username
-    });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send('Error fetching user data');
-  }
-});
+//     res.render('UserHeadlineSelection', { 
+//       selectedHeadlines: selectedHeadlines.map(sh => sh.get({ plain: true })),
+//       username: req.session.username
+//     });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).send('Error fetching user data');
+//   }
+// });
 
 
-UserHeadlineSelection.findAll({
-  include: [{ model: User, as: 'user' }]
-});
+// UserHeadlineSelection.findAll({
+//   include: [{ model: User, as: 'user' }]
+// });
 // ... other routes ...
 
 module.exports = router;
