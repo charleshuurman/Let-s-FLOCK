@@ -79,6 +79,7 @@ app.get('/', (req, res) => {
 
 
 
+
 // Logout route
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
