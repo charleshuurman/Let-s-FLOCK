@@ -1,0 +1,31 @@
+{{> header}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topics</title>
+    <!-- Add any additional CSS or JS links here -->
+</head>
+<body>
+    <h1>Topics</h1>
+    {{#if topics.length}}
+        <ul>
+            {{#each topics}}
+                <li>
+                    <h2>{{this.name}}</h2>
+                    <p>Date: {{this.date}}</p>
+                    <p>Description: {{this.description}}</p>
+                    <!-- Add links for joining, leaving, or viewing more details about the topic -->
+                    <a href="/topic/join/{{this.id}}">Join</a>
+                    <a href="/topic/leave/{{this.id}}">Leave</a>
+                    <a href="/topic/details/{{this.id}}">View Details</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No topics available at the moment.</p>
+    {{/if}}
+</body>
+</html>
+{{> footer}}

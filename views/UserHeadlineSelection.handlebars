@@ -1,0 +1,42 @@
+<h1>Your Selected Headlines</h1>
+
+<!-- List of Selected Headlines -->
+{{#each selectedHeadlines as |selectedHeadline|}}
+  <div class="headline">
+    <h2>{{selectedHeadline.headline.title}}</h2>
+    <img src="{{selectedHeadline.headline.photo_url}}" alt="Headline Image">
+    <p>{{selectedHeadline.headline.description}}</p>
+
+    <!-- List of Users who also selected this headline -->
+    <h3>Other Users Interested in this Headline:</h3>
+    <ul>
+      {{#each selectedHeadline.headline.users as |otherUser|}}
+        <li><a href="/users/profile/{{otherUser.id}}">{{otherUser.username}}</a></li>
+      {{/each}}
+    </ul>
+
+    <!-- Option to Unselect Headline -->
+    <form action="/headline/unselect" method="post">
+      <input type="hidden" name="headlineId" value="{{selectedHeadline.headline.id}}">
+      <input type="submit" value="Unselect Headline">
+    </form>
+  </div>
+{{else}}
+  <p>You have not selected any headlines yet.</p>
+{{/each}}
+
+<!-- Section to Display All Available Headlines for Selection -->
+<h2>Select More Headlines</h2>
+<div class="available-headlines">
+  {{#each allHeadlines as |headline|}}
+    <div class="headline">
+      <h3>{{headline.title}}</h3>
+      <img src="{{headline.photo_url}}" alt="Headline Image">
+      <p>{{headline.description}}</p>
+      <form action="/headline/select" method="post">
+        <input type="hidden" name="headlineId" value="{{headline.id}}">
+        <input type="submit" value="Select Headline">
+      </form>
+    </div>
+  {{/each}}
+</div>

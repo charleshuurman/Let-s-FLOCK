@@ -1,9 +1,18 @@
-const { DataTypes, Model } = require('sequelize');
+// const Sequelize = require('sequelize');
+// const sequelize = require('../config/database');
+
+// const Topic = sequelize.define('topic', {
+//   topicName: Sequelize.STRING,
+//   date: Sequelize.DATE,
+//   description: Sequelize.TEXT
+// });
+
+// module.exports = Topic;
+
+const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-class Headline extends Model {}
-
-Headline.init({
+const Headline = sequelize.define('Headline', {
   // Unique identifier for the headline
   id: {
     type: DataTypes.INTEGER,
@@ -56,9 +65,7 @@ Headline.init({
     }
   }
 }, {
-  sequelize,
-  modelName: 'Headline',
-  timestamps: false // Assuming no created_at or updated_at fields
+  // Additional model options if needed
 });
 
 module.exports = Headline;

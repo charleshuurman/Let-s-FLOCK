@@ -1,0 +1,20 @@
+{{> header}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="views/layouts/style.css"> <!-- Adjust the path to CSS file -->
+</head>
+<body>
+    <div class="message-container">
+        <h1>{{title}}</h1>
+        <p>{{message}}</p>
+        {{#if link}}
+            <a href="{{link.href}}" class="button">{{link.text}}</a>
+        {{/if}}
+    </div>
+</body>
+</html>
+{{> footer}}

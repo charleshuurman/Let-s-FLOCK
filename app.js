@@ -1,126 +1,147 @@
-require("dotenv").config();
-const express = require("express");
-const { engine } = require("express-handlebars");
-const session = require("express-session");
-const sequelize = require("./config/database");
-const axios = require("axios"); // Import axios for making API requests
-
+const express = require('express');
+const axios = require('axios');
+const session = require('express-session');
+const { engine } = require('express-handlebars');
+const path = require('path');
 const app = express();
+require('dotenv').config();
 
-const PORT = process.env.PORT || 3000;
 
-// Set up Handlebars as the view engine
-app.engine("handlebars", engine({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
-app.set("views", "./views");
+// Session middleware configuration
+app.use(session({
+    secret: process.env.SESSION_SECRET, 
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
 
-// Serve static files from the 'public' directory
-app.use(express.static("public"));
-
-// Body Parser Middleware
+// Middleware for parsing request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session configuration
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: process.env.NODE_ENV === "production" },
-  })
-);
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
+// Set up Handlebars with custom helpers, runtime options, and partials
+app.engine('handlebars', engine({
+    helpers: { eq: (v1, v2) => v1 === v2 },
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    },
+    partialsDir: path.join(__dirname, 'views/partials')
+}));
+app.set('view engine', 'handlebars');
+
+// Middleware to make user session data available in all templates
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+});
+
+// Import Sequelize and models
+const sequelize = require('./config/database');
+const User = require('./models/user');
+const Headline = require('./models/headline');
+//const UserHeadlineSelection = require('./models/userHeadlineSelection');
+
+// Define associations
+// User.hasMany(UserHeadlineSelection, { foreignKey: 'userId' });
+// Headline.hasMany(UserHeadlineSelection, { foreignKey: 'headlineId' });
+// UserHeadlineSelection.belongsTo(User, { foreignKey: 'userId' });
+// UserHeadlineSelection.belongsTo(Headline, { foreignKey: 'headlineId' });
 
 // Import routes
-const headlineSelectionRoutes = require("./routes/headlineSelectionRoutes");
-const newsRoutes = require("./routes/newsRoutes");
-const userChatRoutes = require("./routes/userChatRoutes");
-const userRoutes = require("./routes/userRoutes");
+const homeRoutes = require('./routes/home');
+const userRoutes = require('./routes/userRoutes');
+const topicRoutes = require('./routes/topicRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
-// Using routes
-app.use("/headline-selections", headlineSelectionRoutes);
-app.use("/news", newsRoutes);
-app.use("/chats", userChatRoutes);
-app.use("/users", userRoutes);
+// Use routes
+app.use('/', homeRoutes);
+app.use('/users', userRoutes);
+//app.use('/topics', topicRoutes);
+app.use(messageRoutes);
 
 // Home route
-app.get("/", (req, res) => {
-  const topics = [
-    "WORLD",
-    "NATIONAL",
-    "BUSINESS",
-    "TECHNOLOGY",
-    "ENTERTAINMENT",
-    "SPORTS",
-    "SCIENCE",
-    "HEALTH",
-  ];
-  res.render("home", { topics });
+app.get('/', (req, res) => {
+    if (req.session.userId) {
+        res.render('home', { loggedIn: true, username: req.session.username });
+    } else {
+        res.render('home', { loggedIn: false });
+    }
 });
 
-// // Route for fetching headlines based on topic
-// app.get('/fetch-headlines/:topic', async (req, res) => {
-//     const topic = req.params.topic;
-//     try {
-//         const response = await axios.get('https://real-time-news-data.p.rapidapi.com/topic-news-by-section', {
-//             params: {
-//                 topic: topic,
-//                 section: 'CAQiW0NCQVNQZ29JTDIwdk1EZGpNWFlTQW1WdUdnSlZVeUlQQ0FRYUN3b0pMMjB2TURKdFpqRnVLaGtLRndvVFIwRkVSMFZVWDFORlExUkpUMDVmVGtGTlJTQUJLQUEqKggAKiYICiIgQ0JBU0Vnb0lMMjB2TURkak1YWVNBbVZ1R2dKVlV5Z0FQAVAB',
-//                 country: 'US',
-//                 lang: 'en'
-//             },
-//             headers: {
-//                 'X-RapidAPI-Key': '7e027ea54emshf9404a1862b3e29p1ea3d4jsndd6053e82d3d',
-//                 'X-RapidAPI-Host': 'real-time-news-data.p.rapidapi.com'
-//             }
-//         });
-//         res.json(response.data.articles);
-//     } catch (error) {
-//         console.error('Error fetching headlines:', error);
-//         res.status(500).json({ error: 'Error fetching news' });
-//     }
-// });
-// Route for fetching top headlines
-// Home route
-app.get("/", async (req, res) => {
-  const options = {
-    method: "GET",
-    url: "https://real-time-news-data.p.rapidapi.com/top-headlines",
-    params: { country: "US", lang: "en" },
-    headers: {
-      "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
-      "X-RapidAPI-Host": process.env.HOSTNAME_KEY,
-    },
-  };
-
-  try {
-    const response = await axios.request(options);
-    res.render("home", { headlines: response.data.articles });
-  } catch (error) {
-    console.error("Error fetching top headlines:", error);
-    res.status(500).render("error", { error: "Error fetching top headlines" });
-  }
-});
-
-const configureAssociations = require("./associations");
-// Configure model associations
-configureAssociations();
-
-// Synchronize Sequelize models with the database, then start the server
-sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("Database tables created");
-    app.listen(PORT, () => {
-      console.log(`Server running on http://127.0.0.1:${PORT}`);
+// Logout route
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Session destruction error:', err);
+            return res.status(500).send('Unable to log out');
+        }
+        res.redirect('/users/login');
     });
-  })
-  .catch((error) => {
-    console.error("Failed to synchronize database:", error);
-  });
-
-// Error Handling Middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
 });
+
+// Route to fetch top news
+const apiKey = process.env.RAPID_API_KEY;
+app.get('/top-news', async (req, res) => {
+    try {
+        const options = {
+            method: 'GET',
+            url: 'https://real-time-news-data.p.rapidapi.com/top-headlines',
+            params: { country: 'US', lang: 'en' },
+            headers: {
+                'X-RapidAPI-Key':  apiKey,
+                'X-RapidAPI-Host': 'real-time-news-data.p.rapidapi.com'
+            }
+        };
+
+        const response = await axios.request(options);
+        const topNews = response.data.data.slice(0, 10); // Get the top 10 news topics
+        res.json(topNews);
+    } catch (error) {
+        console.error('Error fetching top news:', error);
+        res.status(500).send('Error fetching top news');
+    }
+});
+
+app.get('/api/user-headlines/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Find all headline selections for the user
+        const userHeadlines = await UserHeadlineSelection.findAll({
+            where: { userId: userId },
+            include: [{
+                model: Headline, // Assuming you've set up an association in UserHeadlineSelection
+                as: 'headline'   // 'headline' should match the alias used in your association
+            }]
+        });
+
+        // Extracting headline details from the selections
+        const headlines = userHeadlines.map(selection => selection.headline);
+
+        res.json(headlines);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Server error');
+    }
+});
+
+
+// Sync the database and start the server
+sequelize.sync()
+    .then(() => {
+        console.log('Database synchronized successfully');
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error('Error syncing database:', error);
+    });
+
+
+module.exports = app;
