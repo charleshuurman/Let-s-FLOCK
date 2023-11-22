@@ -1,60 +1,69 @@
-# Backend E-Commerce
+# Let's Fluck
 
 ## Description
 
-Let's Flock is an innovative social dining app designed to connect people over shared interests, particularly in discussing trending news topics while enjoying a meal together. Motivated by the desire to create meaningful social interactions in an increasingly digital world, this project aims to solve the problem of isolation and superficial online connections. Through Let's Flock, users can select topics of interest, choose headlines, schedule meetups, chat in real-time, and manage their profiles securely. The project stands out for its unique approach to combining news discussion with social dining, fostering a community spirit and encouraging informed conversations.
+A Social Dining App to Connect Over Shared Interests  
+
+Let's FLOCK is a unique, non-dating app designed to bring people together for lunch based on mutual interests and preferences. With no focus on photos or dating, this app fosters a community where individuals can make new connections and enjoy meaningful conversations over a meal, simply by matching with others nearby who share similar tastes and hobbies.
+
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Demo](#demo)
+- [Requirements](#requirements)
 - [Screenshot](#screenshot)
 - [Credits](#credits)
 - [License](#license)
 - [Features](#features)
 - [How to Contribute](#how-to-contribute)
-- [Tests](#tests)
 
 ## Installation
 
-To get this project up and running on your local machine, follow these steps:
+To install Let's Flock, clone the repository to your local machine and install the required npm packages:
 
-1. Clone the repository using `git clone [https://github.com/charleshuurman/Back-end-E-commerce]`.
-2. Navigate to the project's root directory in your terminal.
-3. Run `npm install` to install the required dependencies.
-4. Create a `.env` file to securely store your MySQL username, password, and database name.
-5. Execute the `schema.sql` file within the MySQL shell to set up your database.
-6. Seed the database with test data by running `npm run seed`.
-7. Launch the server with `npm start`.
+        git clone `git clone [https://github.com/charleshuurman/Let-s-FLOCK]`.
+        cd lets-flock
+        npm install
+
+Configure your environment variables for database access and API keys, then start the server:
+
+        npm start
+
 
 ## Usage
 
-Designed for backend operations of e-commerce sites, this application supports CRUD operations via API routes for categories, products, and tags.
+Register or log in to access the home page. Select news topics, engage in discussions, schedule meetups, and enjoy real-time chats. The app is designed to be intuitive and responsive across various devices.
 
-Example API calls include:
+Access the deployed application on Heroku: [Let's Flock on Heroku](https://lets-flock-88ff5e62ba42.herokuapp.com/users/register)
 
-- Fetch all products: `GET /api/products`
-- Add a new category: `POST /api/categories`
+## Requirements
 
-## Demo
-
-For a demonstration of the application's functionality, please refer to the following video:
-
-[<img src="screenshot2.jpg" alt="MySQL Terminal Screenshot" height="200">](https://youtu.be/Lsym_bs653E)
+- Node.js and Express.js for the backend.
+- Handlebars.js as the template engine.
+- MySQL and Sequelize ORM for data management.
+- Authentication using express-session and cookies.
+- API keys and sensitive data secured with environment variables.
+- Deployment on Heroku with data persistence.
+- A polished, responsive UI.
 
 ## Screenshot
 
-Below is a screenshot of the MySQL terminal using the E-Commerce Backend application:
+For a visual guide:
 
-<img src="screenshot.jpg" alt="MySQL Terminal Screenshot" height="300">
+<img src="/public/images/Screenshot.png" alt="Home Page" height="300">
 
 ## Credits
 
-Starter code [Fantastic Umbrella](https://github.com/coding-boot-camp/fantastic-umbrella).
-Developed by [Charles Huurman](https://github.com/charleshuurman).
+Developed by a dedicated team, special thanks to:
 
-Thanks to the Sequelize and MySQL2 npm package contributors.
+- [Charles Huurman](https://github.com/charleshuurman)
+- [Guilardo Sanchez](https://github.com/Gildardo1098)
+- [Alexander Ruiz](https://github.com/Drogon88)
+- [Devon Rooks](https://github.com/diffwentstrokes)
+- [Caleb Contreras](https://github.com/El-Caleb)
+
+Inspired by news API services and built with Express.js and Axios.js
 
 ## License
 
@@ -62,14 +71,16 @@ This project is released under the MIT License. See the [LICENSE](LICENSE.md) fi
 
 ## Features
 
-- RESTful API endpoints for e-commerce operations.
-- Secure MySQL database integration using environment variables.
-- Comprehensive CRUD functionality for product management.
+- Real-time chat and news discussions.
+- Geolocation-based user matchmaking.
+- Secure user authentication and data protection.
+- Responsive design for diverse screen sizes.
+- Continuous news updates.
 
-## How to Contribute
+## Contribution
 
-We welcome contributions! For significant changes, please open an issue first to discuss what you would like to change. Ensure that you update tests accordingly.
+Contributions are welcome! Please follow the [Contributor Covenant](https://www.contributor-covenant.org/) guidelines.
 
-## Tests
 
-Run `npm test` in the root directory to execute the test suite.
+
+
