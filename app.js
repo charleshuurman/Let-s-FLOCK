@@ -71,7 +71,7 @@ app.use(messageRoutes);
 // Home route
 app.get('/', (req, res) => {
     if (req.session.userId) {
-        res.render('/users/register', { loggedIn: true, username: req.session.username });
+        res.render('/home/register', { loggedIn: true, username: req.session.username });
     } else {
         res.redirect('/users/register'); // Redirect to the registration page
     }
