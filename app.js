@@ -71,11 +71,12 @@ app.use(messageRoutes);
 // Home route
 app.get('/', (req, res) => {
     if (req.session.userId) {
-        res.render('register', { loggedIn: true, username: req.session.username });
+        res.render('home', { loggedIn: true, username: req.session.username });
     } else {
-        res.render('login', { loggedIn: false });
+        res.redirect('/users/register'); // Redirect to the registration page
     }
 });
+
 
 
 // Logout route
